@@ -1,6 +1,31 @@
 import React, { Component } from 'react';
 
 export class FetchData extends Component {
+    static renderForecastsTable(forecasts) {
+        return (
+            <table className='table'>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Temp. (C)</th>
+                        <th>Temp. (F)</th>
+                        <th>Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {forecasts.map(forecast => (
+                        <tr key={forecast.dateFormatted}>
+                            <td>{forecast.dateFormatted}</td>
+                            <td>{forecast.temperatureC}</td>
+                            <td>{forecast.temperatureF}</td>
+                            <td>{forecast.summary}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        );
+    }
+
   displayName = FetchData.name
 
   constructor(props) {
@@ -12,31 +37,6 @@ export class FetchData extends Component {
       .then(data => {
         this.setState({ forecasts: data, loading: false });
       });
-  }
-
-  static renderForecastsTable(forecasts) {
-    return (
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.dateFormatted}>
-              <td>{forecast.dateFormatted}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    );
   }
 
   render() {
